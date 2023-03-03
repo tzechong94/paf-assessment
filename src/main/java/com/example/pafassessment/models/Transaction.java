@@ -2,6 +2,8 @@ package com.example.pafassessment.models;
 
 import java.util.Date;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -31,5 +33,15 @@ public class Transaction {
     private Float amount;
 
     private String comments;
+
+    public JsonObject toJsonObject() {
+        return Json.createObjectBuilder()
+        .add("transactionId", this.getTransactionId())
+        .add("date", this.getDate().toString())
+        .add("from_account", this.getFromAccount())
+        .add("to_account", this.getToAccount())
+        .add("amount", this.getAmount())
+        .build();
+    }
 
 }

@@ -14,6 +14,7 @@ import com.example.pafassessment.service.AccountService;
 import com.example.pafassessment.service.FundsTransferService;
 import com.example.pafassessment.service.LogAuditService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -30,11 +31,11 @@ public class FundsTransferController {
 
     
     @GetMapping("/")
-    public String getForm(Model model) {
+    public String getForm(Model model, HttpSession sess) {
         // List<Accounts> listOfAccounts = getaccounts from mysql
         // List<String> nameAndAccountId = map form listOfAccounts
         // model.addAttribute(null, form)
-
+        // sess.setAttribute("transaction", new Transaction());
         List<Account> listOfAccounts = accountSvc.getAllAccounts();
         // List<String> listOfNameAndAccountId = new ArrayList<String>();
 
@@ -52,8 +53,9 @@ public class FundsTransferController {
 
     @PostMapping(path = "/transfer", consumes = "application/x-www-form-urlencoded")
     public String postForm(@Valid Transaction transaction, BindingResult bindingResult,
-    Model model) {
+    Model model, HttpSession sess) {
 
+        
         String fromAccount = transaction.getFromAccount();
         String toAccount = transaction.getToAccount();
         Float transferAmount = transaction.getAmount();
