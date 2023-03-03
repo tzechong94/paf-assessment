@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.pafassessment.exception.TransferFundsException;
 import com.example.pafassessment.models.Account;
 import com.example.pafassessment.models.Transaction;
 import com.example.pafassessment.repo.FundsTransferRepo;
@@ -19,7 +21,7 @@ public class FundsTransferService {
     @Autowired
     private AccountService accountSvc;
 
-
+    @Transactional(rollbackFor = TransferFundsException.class)
     public Transaction transferFunds(Transaction transaction) {
         String transactionId= UUID
                         .randomUUID()
@@ -36,5 +38,7 @@ public class FundsTransferService {
         transaction.setToAccountName(toAccount.getName());
         return fundsTransferRepo.transferFunds(transaction);
     }
+
+
 
 }

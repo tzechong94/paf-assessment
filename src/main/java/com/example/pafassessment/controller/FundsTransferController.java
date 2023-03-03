@@ -12,6 +12,7 @@ import com.example.pafassessment.models.Account;
 import com.example.pafassessment.models.Transaction;
 import com.example.pafassessment.service.AccountService;
 import com.example.pafassessment.service.FundsTransferService;
+import com.example.pafassessment.service.LogAuditService;
 
 import jakarta.validation.Valid;
 
@@ -23,6 +24,10 @@ public class FundsTransferController {
 
     @Autowired
     private FundsTransferService fundsTransferSvc;
+
+    @Autowired
+    private LogAuditService logAuditSvc;
+
     
     @GetMapping("/")
     public String getForm(Model model) {
@@ -107,6 +112,8 @@ public class FundsTransferController {
     
         System.out.println(validTransaction + "result transaction");
         model.addAttribute("validTransaction", validTransaction);
+        // log to redis here
+        logAuditSvc.logTransaction(validTransaction);
         return "summary";
 
     }
