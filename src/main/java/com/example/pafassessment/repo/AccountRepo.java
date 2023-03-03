@@ -23,7 +23,7 @@ public class AccountRepo {
         return jdbcTemplate.query(getAllAccountsSQL, BeanPropertyRowMapper.newInstance(Account.class));
     }
 
-    public boolean findAccountByAccountId(String accountId) {
+    public boolean doesAccountExistByAccountId(String accountId) {
         Account result = jdbcTemplate.queryForObject(getAccountByAccountIdSQL, BeanPropertyRowMapper.newInstance(Account.class), accountId);
         if (result == null){
             System.out.println("No account found");
@@ -32,6 +32,11 @@ public class AccountRepo {
             System.out.println(result.getName() + " name found");
             return true;
         }
+    }
+
+    public Account getAccountById(String accountId) {
+        Account result = jdbcTemplate.queryForObject(getAccountByAccountIdSQL, BeanPropertyRowMapper.newInstance(Account.class), accountId);
+        return result;
     }
 
     public Float getBalanceByAccountId(String fromAccount) {

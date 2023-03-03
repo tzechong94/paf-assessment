@@ -1,7 +1,6 @@
 package com.example.pafassessment.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +17,16 @@ public class AccountService {
         return accountRepo.getAllAccounts();
     }
 
-    public boolean findAccountByAccountId(String accountId) {
-        return accountRepo.findAccountByAccountId(accountId);
+    public boolean doesAccountExistByAccountId(String accountId) {
+        return accountRepo.doesAccountExistByAccountId(accountId);
     }
 
     public Float getBalanceByAccountId(String fromAccount) {
         return accountRepo.getBalanceByAccountId(fromAccount);
     }
-    
+
+    public Account getAccountById(String accountId) {
+        return accountRepo.getAccountById(accountId);
+
+    }
 }

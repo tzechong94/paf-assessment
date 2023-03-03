@@ -7,6 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Transfer Summary</h1>
+    <p>
+        Your transfer of $<span data-th-text="${validTransaction.amount}"></span> 
+        from <span data-th-text="${validTransaction.fromAccountName}  + ' (' + ${validTransaction.fromAccount} + ')'"></span> to <br>
+        <span data-th-text="${validTransaction.toAccountName}   + ' (' + ${validTransaction.toAccount} + ')'" ></span> <br>
+        is successful.
+
+        <br><br>
+        Transaction id is <span data-th-text="${validTransaction.transactionId}"></span>
+
+    </p>
 </body>
 </html>

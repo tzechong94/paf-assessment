@@ -13,7 +13,7 @@
             <tr>
                 <td>From account:</td>
                 <td>
-                    <select data-th-field="*{fromAccount}">
+                    <select data-th-field="*{fromAccount}" required>
                         <option data-th-each="account: ${listOfAccounts}" data-th-value="${account.accountId}" data-th-text="${account.name} + ' (' + ${account.accountId} + ')'"></option>
                     </select>
                 </td>                
@@ -21,7 +21,7 @@
             <tr>
                 <td>To account:</td>
                 <td>
-                    <select data-th-field="*{toAccount}" >
+                    <select data-th-field="*{toAccount}" required>
                         <option data-th-each="account: ${listOfAccounts}" data-th-value="${account.accountId}" data-th-text="${account.name} + ' (' + ${account.accountId} + ')'"></option>
                     </select>
                 </td>                
@@ -29,7 +29,7 @@
             <tr>
                 <td>Amount</td>
                 <td>
-                    <input type="number" step="0.01" data-th-field="*{amount}"/>
+                    <input type="number" step="0.01" data-th-field="*{amount}" required/>
                 </td>                
             </tr>
             <tr>

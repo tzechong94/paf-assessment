@@ -19,8 +19,12 @@ public class Transaction {
     @Size(min= 10, max=10, message="Account number not 10 characters")
     private String fromAccount;
 
+    private String fromAccountName;
+
     @Size(min= 10, max=10, message="Account number not 10 characters")
     private String toAccount;
+
+    private String toAccountName;
 
     @Min(value = 0,  message = "The amount must be positive")
     @Min(value = 10,  message = "The minimum transfer is $10.")

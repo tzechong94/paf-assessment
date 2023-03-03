@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.pafassessment.models.Account;
 import com.example.pafassessment.models.Transaction;
 import com.example.pafassessment.service.AccountService;
+import com.example.pafassessment.service.FundsTransferService;
 
 import jakarta.validation.Valid;
 
@@ -20,6 +21,9 @@ public class FundsTransferController {
     @Autowired
     private AccountService accountSvc;
 
+    @Autowired
+    private FundsTransferService fundsTransferSvc;
+    
     @GetMapping("/")
     public String getForm(Model model) {
         // List<Accounts> listOfAccounts = getaccounts from mysql
@@ -47,7 +51,7 @@ public class FundsTransferController {
 
         String fromAccount = transaction.getFromAccount();
         String toAccount = transaction.getToAccount();
-
+        Float transferAmount = transaction.getAmount();
         
         // String fromAccount = form.getFirst("fromAccount");
         // String toAccount = form.getFirst("toAccount");
@@ -74,7 +78,7 @@ public class FundsTransferController {
         // accountSvc.findAccountByAccountId(toAccount);
         // accountSvc.findAccountByAccountId(fromAccount);
 
-        if (!accountSvc.findAccountByAccountId(fromAccount) || !accountSvc.findAccountByAccountId(toAccount)){
+        if (!accountSvc.doesAccountExistByAccountId(fromAccount) || !accountSvc.doesAccountExistByAccountId(toAccount)){
             List<Account> listOfAccounts = accountSvc.getAllAccounts();
             model.addAttribute("listOfAccounts", listOfAccounts);
             System.out.println("accounts dont exist");
@@ -87,7 +91,7 @@ public class FundsTransferController {
 
         Float senderBalance = accountSvc.getBalanceByAccountId(fromAccount);
 
-        if (transaction.getAmount() > senderBalance) {
+        if (transferAmount > senderBalance) {
             List<Account> listOfAccounts = accountSvc.getAllAccounts();
             model.addAttribute("listOfAccounts", listOfAccounts);
             System.out.println("Not enough balance!");
@@ -97,19 +101,15 @@ public class FundsTransferController {
             return "transferform";
         }
 
-
-
-
-        System.out.println(fromAccount + " from account");
-        System.out.println(toAccount + " to account");
-
-        // if (toAccount.equals(fromAccount)) {
-        //     String error = "Both accounts are the same. Transaction failed.";
-        //     model.addAttribute("error", error);
-        //     return "transferform";
-        // }
-
+        // System.out.println(fromAccount + " from account");
+        // System.out.println(toAccount + " to account");
+        Transaction validTransaction = fundsTransferSvc.transferFunds(transaction);
+    
+        System.out.println(validTransaction + "result transaction");
+        model.addAttribute("validTransaction", validTransaction);
         return "summary";
 
     }
+
+
 }
