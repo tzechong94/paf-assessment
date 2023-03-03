@@ -32,19 +32,8 @@ public class FundsTransferController {
     
     @GetMapping("/")
     public String getForm(Model model, HttpSession sess) {
-        // List<Accounts> listOfAccounts = getaccounts from mysql
-        // List<String> nameAndAccountId = map form listOfAccounts
-        // model.addAttribute(null, form)
-        // sess.setAttribute("transaction", new Transaction());
         List<Account> listOfAccounts = accountSvc.getAllAccounts();
-        // List<String> listOfNameAndAccountId = new ArrayList<String>();
-
-        // for (Account x : listOfAccounts){
-        //     listOfNameAndAccountId.add(x.getName() + " (" + x.getAccountId() +")");
-        // }
         String error = "";
-        // System.out.println(listOfNameAndAccountId);
-        // System.out.println(listOfAccounts);
         model.addAttribute("listOfAccounts", listOfAccounts);
         model.addAttribute("error", error);
         model.addAttribute("transaction", new Transaction());
@@ -60,13 +49,10 @@ public class FundsTransferController {
         String toAccount = transaction.getToAccount();
         Float transferAmount = transaction.getAmount();
         
-        // String fromAccount = form.getFirst("fromAccount");
-        // String toAccount = form.getFirst("toAccount");
 
         if (bindingResult.hasErrors()){
             List<Account> listOfAccounts = accountSvc.getAllAccounts();
             
-            // System.out.println(listOfAccounts);
             model.addAttribute("listOfAccounts", listOfAccounts);
             System.out.println("both accounts not the same, but binding errors");
             return "transferform"; 
@@ -82,8 +68,6 @@ public class FundsTransferController {
             return "transferform";
         } 
 
-        // accountSvc.findAccountByAccountId(toAccount);
-        // accountSvc.findAccountByAccountId(fromAccount);
 
         if (!accountSvc.doesAccountExistByAccountId(fromAccount) || !accountSvc.doesAccountExistByAccountId(toAccount)){
             List<Account> listOfAccounts = accountSvc.getAllAccounts();
@@ -108,17 +92,22 @@ public class FundsTransferController {
             return "transferform";
         }
 
-        // System.out.println(fromAccount + " from account");
-        // System.out.println(toAccount + " to account");
         Transaction validTransaction = fundsTransferSvc.transferFunds(transaction);
     
         System.out.println(validTransaction + "result transaction");
         model.addAttribute("validTransaction", validTransaction);
+        sess.setAttribute("validTransaction", validTransaction);
         // log to redis here
         logAuditSvc.logTransaction(validTransaction);
-        return "summary";
+        return "redirect:/transfer";
 
     }
 
+    @GetMapping("/transfer")
+    public String formSubmitted(Model model, HttpSession sess) {
+        Transaction transaction = (Transaction) sess.getAttribute("validTransaction");
+        model.addAttribute("validTransaction", transaction);
+        return "summary";
+    }
 
 }
