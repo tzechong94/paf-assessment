@@ -13,29 +13,29 @@
             <tr>
                 <td>From account:</td>
                 <td>
-                    <select>
-                        <option data-th-each="nameAndAccountId: ${listOfNameAndAccountId}" data-th-text="${nameAndAccountId}"></option>
+                    <select data-th-field="${transaction.fromAccount}">
+                        <option data-th-each="account: ${listOfAccounts}" data-th-value="${account.accountId}" data-th-text="${account.name} + '(' + ${account.accountId} + ')'"></option>
                     </select>
                 </td>                
             </tr>
             <tr>
                 <td>To account:</td>
                 <td>
-                    <select>
-                        <option data-th-each="nameAndAccountId: ${listOfNameAndAccountId}" data-th-text="${nameAndAccountId}"></option>
+                    <select data-th-field="${transaction.toAccount}">
+                        <option data-th-each="account: ${listOfAccounts}" data-th-value="${account.accountId}" data-th-text="${account.name} + '(' + ${account.accountId} + ')'"></option>
                     </select>
                 </td>                
             </tr>
             <tr>
                 <td>Amount</td>
                 <td>
-                    <input type="number"/>
+                    <input type="number" data-th-field="${transaction.amount}"/>
                 </td>                
             </tr>
             <tr>
                 <td>Comments</td>
                 <td>
-                    <input type="text"/>
+                    <input type="text" data-th-field="${transaction.comments}"/>
                 </td>                
             </tr>
             <tr>

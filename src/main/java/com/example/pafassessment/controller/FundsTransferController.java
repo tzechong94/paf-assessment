@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.pafassessment.models.Account;
+import com.example.pafassessment.models.Transaction;
 import com.example.pafassessment.service.AccountService;
 
 @Controller
@@ -32,7 +34,13 @@ public class FundsTransferController {
 
         System.out.println(listOfNameAndAccountId);
         System.out.println(listOfAccounts);
-        model.addAttribute("listOfNameAndAccountId", listOfNameAndAccountId);
+        model.addAttribute("listOfAccounts", listOfAccounts);
+        model.addAttribute("transaction", new Transaction());
         return "transferform";
     }
+
+    // @PostMapping("/transfer")
+    // public String postForm(Model model) {
+
+    // }
 }
