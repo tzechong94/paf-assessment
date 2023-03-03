@@ -17,5 +17,13 @@ public class AccountService {
     public List<Account> getAllAccounts() {
         return accountRepo.getAllAccounts();
     }
+
+    public boolean findAccountByAccountId(String accountId) {
+        return accountRepo.findAccountByAccountId(accountId);
+    }
+
+    public Float getBalanceByAccountId(String fromAccount) {
+        return accountRepo.getBalanceByAccountId(fromAccount);
+    }
     
 }

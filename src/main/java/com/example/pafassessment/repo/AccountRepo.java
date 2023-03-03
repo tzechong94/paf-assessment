@@ -17,9 +17,26 @@ public class AccountRepo {
     private JdbcTemplate jdbcTemplate;
 
     public static final String getAllAccountsSQL = "select * from accounts";
+    public static final String getAccountByAccountIdSQL = "select * from accounts where account_id = ?";
 
     public List<Account> getAllAccounts() {
         return jdbcTemplate.query(getAllAccountsSQL, BeanPropertyRowMapper.newInstance(Account.class));
+    }
+
+    public boolean findAccountByAccountId(String accountId) {
+        Account result = jdbcTemplate.queryForObject(getAccountByAccountIdSQL, BeanPropertyRowMapper.newInstance(Account.class), accountId);
+        if (result == null){
+            System.out.println("No account found");
+            return false;
+        } else {
+            System.out.println(result.getName() + " name found");
+            return true;
+        }
+    }
+
+    public Float getBalanceByAccountId(String fromAccount) {
+        Account result = jdbcTemplate.queryForObject(getAccountByAccountIdSQL, BeanPropertyRowMapper.newInstance(Account.class), fromAccount);
+        return result.getBalance();
     }
     
 }
