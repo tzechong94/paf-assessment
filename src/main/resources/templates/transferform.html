@@ -8,5 +8,50 @@
 </head>
 <body>
     <h1>Funds Transfer</h1>
+    <form action="#" data-th-action="@{/transfer}" method="post">
+        <table>
+            <tr>
+                <td>From account:</td>
+                <td>
+                    <select>
+                        <option data-th-each="nameAndAccountId: ${listOfNameAndAccountId}" data-th-text="${nameAndAccountId}"></option>
+                    </select>
+                </td>                
+            </tr>
+            <tr>
+                <td>To account:</td>
+                <td>
+                    <select>
+                        <option data-th-each="nameAndAccountId: ${listOfNameAndAccountId}" data-th-text="${nameAndAccountId}"></option>
+                    </select>
+                </td>                
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>
+                    <input type="number"/>
+                </td>                
+            </tr>
+            <tr>
+                <td>Comments</td>
+                <td>
+                    <input type="text"/>
+                </td>                
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Transfer</button>
+                </td>                
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" readonly/>
+                </td>                
+            </tr>
+
+        </table>
+
+    </form>
 </body>
 </html>
