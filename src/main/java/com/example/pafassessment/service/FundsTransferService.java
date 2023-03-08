@@ -23,10 +23,12 @@ public class FundsTransferService {
 
     @Transactional(rollbackFor = TransferFundsException.class)
     public Transaction transferFunds(Transaction transaction) {
+
         String transactionId= UUID
                         .randomUUID()
                         .toString()
                         .substring(0, 8);
+
         transaction.setTransactionId(transactionId);
 
         Date date = new Date();
@@ -34,11 +36,12 @@ public class FundsTransferService {
 
         Account fromAccount = accountSvc.getAccountById(transaction.getFromAccount());
         Account toAccount = accountSvc.getAccountById(transaction.getToAccount());
+
         transaction.setFromAccountName(fromAccount.getName());
         transaction.setToAccountName(toAccount.getName());
+        
         return fundsTransferRepo.transferFunds(transaction);
     }
-
 
 
 }

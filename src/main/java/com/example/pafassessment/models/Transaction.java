@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class Transaction {
     
     private String transactionId;
+    
     private Date date;
 
     @Size(min= 10, max=10, message="Account number not 10 characters")

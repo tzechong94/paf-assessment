@@ -19,6 +19,7 @@ public class FundsTransferRepo {
         Float amount = transaction.getAmount();
         String fromAccountId = transaction.getFromAccount();
         String toAccountId = transaction.getToAccount();
+        
         jdbcTemplate.update(updateFromAccountById, amount, fromAccountId);
         jdbcTemplate.update(updateToAccountById, amount, toAccountId);
 

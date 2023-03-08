@@ -28,7 +28,7 @@ public class LogAuditService {
     public void logTransaction(Transaction transaction) {
         transaction.toJsonObject();
         String json = transaction.toString();
-        System.out.println(json + "Json value");
+        // System.out.println(json + "Json value");
         redisTemplate.opsForValue().set(transaction.getTransactionId(), json);
     }
 
